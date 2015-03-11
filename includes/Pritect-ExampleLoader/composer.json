@@ -1,0 +1,8 @@
+{
+  "name": "Pritect/ExampleLoader",
+  "type": "wordpress-plugin",
+  "description": "Demonstration of library loading method",
+  "autoload": {
+    "files": [ "example-loader.php" ]
+  }
+}
