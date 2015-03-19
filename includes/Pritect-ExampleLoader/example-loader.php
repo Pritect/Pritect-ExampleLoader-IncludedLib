@@ -63,6 +63,7 @@ if ( ! function_exists( pritect_example_loader ) ) {
 							$maybe_match = true;
 						} else {
 							$maybe_match = false;
+							break;
 						}
 					}
 					if ( true === $maybe_match ) {
