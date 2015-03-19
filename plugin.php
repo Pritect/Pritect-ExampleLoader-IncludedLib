@@ -16,5 +16,6 @@ add_action( 'init', 'pritect_exampleloader_includedlib_go' );
 function pritect_exampleloader_includedlib_go() {
 	$PAK = pritect_example_loader( array(), '1.0.0' );
 	$PAKnewest = pritect_example_loader();
+	$PAKarray = pritect_example_loader( array(), array( '1.0.0' => '>=', '2.0.0' => '<' ) );
 	$a = 1;
 }

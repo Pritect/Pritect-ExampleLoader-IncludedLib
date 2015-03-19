@@ -30,12 +30,11 @@ if ( ! function_exists( pritect_example_loader ) ) {
 	 * be used if there are other versions installed as libraries or as a plugin
 	 *
 	 * @param mixed $params
-	 * @param string $version
-	 * @param string $operator
+	 * @param mixed $version
 	 *
 	 * @return null
 	 */
-	function pritect_example_loader( $params = null, $version = null, $operator = '<=' ) {
+	function pritect_example_loader( $params = null, $version = null ) {
 		$class_matches = array();
 		foreach ( get_declared_classes() as $class ) {
 			if ( preg_match( '/Pritect_ExampleLoader_Bootstrap_v([\w_]+)/', $class, $match ) ) {
@@ -53,11 +52,24 @@ if ( ! function_exists( pritect_example_loader ) ) {
 				$matching_class = end( $class_matches );
 				$matching_version = key( $class_matches );
 			} else {
+				if ( ! is_array( $version ) ) {
+					$version = array( $version => '<=' );
+				}
 				// Search for version
 				foreach ( $class_matches as $test_version => $test_class ) {
-					if ( version_compare( $test_version, $version, $operator ) ) {
+					$maybe_match = false;
+					foreach ( $version as $compare_version => $compare_operator ) {
+						if ( version_compare( $test_version, $compare_version, $compare_operator ) ) {
+							$maybe_match = true;
+						} else {
+							$maybe_match = false;
+						}
+					}
+					if ( true === $maybe_match ) {
+						// Only consider it a match if all cases were true
 						$matching_version = $test_version;
-						$matching_class = $test_class;
+						$matching_class   = $test_class;
+
 					}
 				}
 			}
